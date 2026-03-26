@@ -861,39 +861,98 @@
     }
 
     /* ═══ VOICE FORM ═════════════════════════════════════════════ */
-    .voice-box { display: flex; flex-direction: column; gap: 12px; }
-    .voice-btn {
+    .form-mode-switcher {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 16px;
-      background: rgba(201,162,39,.12);
-      border: 2px dashed rgba(201,162,39,.4);
-      border-radius: var(--radius);
-      color: var(--gold);
-      font-size: 1rem;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,.04);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,.5);
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
       font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .mode-btn.active {
+      background: var(--gold);
+      color: var(--dark);
+    }
+    .voice-panel-box {
+      background: rgba(201,162,39,.06);
+      border: 1px dashed rgba(201,162,39,.3);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .voice-hint {
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .voice-hint em {
+      color: rgba(255,255,255,.35);
+      font-style: italic;
+      display: block;
+      margin-top: 6px;
+    }
+    .voice-btn-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: rgba(201,162,39,.15);
+      border: 2px solid rgba(201,162,39,.5);
+      border-radius: 100px;
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 700;
       cursor: pointer;
       font-family: 'Inter', sans-serif;
       transition: all .2s;
     }
-    .voice-btn:hover { background: rgba(201,162,39,.2); }
-    .voice-btn.recording {
+    .voice-btn-big:hover { background: rgba(201,162,39,.25); }
+    .voice-btn-big.recording {
       background: rgba(220,50,50,.15);
       border-color: rgba(220,50,50,.6);
       color: #ff6b6b;
-      animation: pulse 1s infinite;
+      animation: pulse 1.2s infinite;
     }
     @keyframes pulse {
       0%,100% { box-shadow: 0 0 0 0 rgba(220,50,50,.3); }
-      50%      { box-shadow: 0 0 0 10px rgba(220,50,50,0); }
+      50%      { box-shadow: 0 0 0 14px rgba(220,50,50,0); }
     }
     .voice-status {
       font-size: .82rem;
       color: var(--gold);
-      min-height: 18px;
-      text-align: center;
+      min-height: 20px;
+      margin-top: 12px;
+    }
+    .voice-transcript {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+      border-radius: 8px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.6);
+      text-align: left;
+      font-style: italic;
+    }
+    .voice-parsed-title {
+      margin-top: 12px;
+      font-size: .85rem;
+      color: #6fcf97;
+      font-weight: 600;
     }
 
     /* ═══ GALLERY ════════════════════════════════════════════════ */
@@ -1498,30 +1557,74 @@
         </div>
       </div>
       <div class="contact-form fade-up">
-        <form onsubmit="submitForm(event)">
+
+        <!-- VOICE MODE TOGGLE -->
+        <div class="form-mode-switcher">
+          <button type="button" class="mode-btn active" id="btnManual" onclick="setMode('manual')">
+            ✏️ Fill in form
+          </button>
+          <button type="button" class="mode-btn" id="btnVoice" onclick="setMode('voice')">
+            🎤 Speak instead
+          </button>
+        </div>
+
+        <!-- VOICE PANEL -->
+        <div id="voicePanel" style="display:none;">
+          <div class="voice-panel-box">
+            <p class="voice-hint">
+              Just say everything at once — your name, phone number, email, what you need.<br/>
+              <em>Example: "Hi, my name is John Murphy, phone 083 123 4567, email john@gmail.com, I need a resin driveway in Wicklow, about 50 square meters."</em>
+            </p>
+            <button type="button" id="voiceBtn" onclick="toggleVoice()" class="voice-btn-big">
+              🎤 <span id="voiceBtnText">Tap to start speaking</span>
+            </button>
+            <p id="voiceStatus" class="voice-status"></p>
+            <div id="voiceTranscript" class="voice-transcript" style="display:none;"></div>
+            <div id="voiceParsed" style="display:none;">
+              <p class="voice-parsed-title">✅ Filled in automatically — check and send:</p>
+            </div>
+          </div>
+        </div>
+
+        <form onsubmit="submitForm(event)" id="mainForm">
           <div class="form-row">
             <div class="form-group">
               <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" placeholder="John Murphy" required />
+              <input type="text" id="fname" name="name" placeholder="John Murphy" />
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number</label>
+              <label for="phone">Phone Number <span style="color:var(--gold)">*</span></label>
               <input type="tel" id="phone" name="phone" placeholder="+353 83 XXX XXXX" required />
             </div>
           </div>
-          <div class="form-group">
-            <label>Describe Your Project</label>
-            <div class="voice-box">
-              <button type="button" id="voiceBtn" onclick="toggleVoice()" class="voice-btn">
-                🎤 <span id="voiceBtnText">Tap to speak</span>
-              </button>
-              <p id="voiceStatus" class="voice-status"></p>
-              <textarea id="message" name="message" rows="4"
-                placeholder="Or type here — size, location, material preference..."></textarea>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="john@example.ie" />
+            </div>
+            <div class="form-group">
+              <label for="county">County</label>
+              <select id="county" name="county">
+                <option value="" selected>Select county</option>
+                <option>Dublin</option><option>Wicklow</option><option>Wexford</option>
+                <option>Kildare</option><option>Meath</option><option>Louth</option>
+                <option>Carlow</option><option>Kilkenny</option><option>Waterford</option>
+              </select>
             </div>
           </div>
+          <div class="form-group">
+            <label for="message">Project Details</label>
+            <textarea id="message" name="message" rows="3"
+              placeholder="Size, material preference, any other details..."></textarea>
+          </div>
+          <div class="form-group" style="display:flex;align-items:center;gap:10px;">
+            <input type="checkbox" id="callback" name="callback" style="width:18px;height:18px;accent-color:var(--gold);" />
+            <label for="callback" style="text-transform:none;letter-spacing:0;font-size:.95rem;color:rgba(255,255,255,.7);margin:0;">
+              Please call me back
+            </label>
+          </div>
           <button type="submit" class="btn btn-gold form-submit">Send Free Quote Request →</button>
-          <p class="form-note">🔒 No spam. We respond within 24 hours.</p>
+          <p class="form-note">🔒 Only phone number is required. We respond within 24 hours.</p>
         </form>
       </div>
     </div>
@@ -1614,56 +1717,135 @@
     btn.style.color = '#fff';
   }
 
-  // Voice input (Web Speech API)
+  // ── Form mode switcher ────────────────────────────────────────
+  function setMode(mode) {
+    const voicePanel = document.getElementById('voicePanel');
+    const btnManual  = document.getElementById('btnManual');
+    const btnVoice   = document.getElementById('btnVoice');
+    if (mode === 'voice') {
+      voicePanel.style.display = 'block';
+      btnVoice.classList.add('active');
+      btnManual.classList.remove('active');
+    } else {
+      voicePanel.style.display = 'none';
+      btnManual.classList.add('active');
+      btnVoice.classList.remove('active');
+    }
+  }
+
+  // ── Smart voice parser ────────────────────────────────────────
+  function parseTranscript(text) {
+    const t = text.toLowerCase();
+    const result = {};
+
+    // Phone — Irish mobile/landline patterns
+    const phoneMatch = text.match(/(\+353|00353|0)[0-9\s\-]{8,12}/);
+    if (phoneMatch) result.phone = phoneMatch[0].replace(/\s/g,'');
+
+    // Email
+    const emailMatch = text.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
+    if (emailMatch) result.email = emailMatch[0];
+
+    // Name — "my name is X", "I'm X", "I am X", "this is X"
+    const nameMatch = text.match(/(?:my name is|i(?:'m| am)|this is|it'?s|call me)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i);
+    if (nameMatch) result.name = nameMatch[1];
+
+    // County
+    const counties = ['Dublin','Wicklow','Wexford','Kildare','Meath','Louth','Carlow','Kilkenny','Waterford'];
+    for (const c of counties) {
+      if (t.includes(c.toLowerCase())) { result.county = c; break; }
+    }
+
+    // Callback
+    if (t.includes('call me back') || t.includes('please call') || t.includes('ring me')) {
+      result.callback = true;
+    }
+
+    // Message — everything that isn't contact details
+    let msg = text;
+    if (phoneMatch) msg = msg.replace(phoneMatch[0], '');
+    if (emailMatch) msg = msg.replace(emailMatch[0], '');
+    if (nameMatch)  msg = msg.replace(nameMatch[0], '');
+    msg = msg.replace(/(?:my name is|i(?:'m| am)|this is|call me)\s+\w+/gi, '')
+             .replace(/(?:call me back|please call|ring me)/gi, '')
+             .replace(/\s{2,}/g,' ').trim();
+    if (msg.length > 10) result.message = msg;
+
+    return result;
+  }
+
+  function fillFormFromVoice(parsed) {
+    if (parsed.name)     document.getElementById('fname').value   = parsed.name;
+    if (parsed.phone)    document.getElementById('phone').value   = parsed.phone;
+    if (parsed.email)    document.getElementById('email').value   = parsed.email;
+    if (parsed.message)  document.getElementById('message').value = parsed.message;
+    if (parsed.callback) document.getElementById('callback').checked = true;
+    if (parsed.county) {
+      const sel = document.getElementById('county');
+      for (let o of sel.options) {
+        if (o.value === parsed.county) { sel.value = parsed.county; break; }
+      }
+    }
+  }
+
+  // ── Web Speech API ────────────────────────────────────────────
   let recognition = null;
   let isRecording = false;
+
   function toggleVoice() {
-    const btn = document.getElementById('voiceBtn');
+    const btn     = document.getElementById('voiceBtn');
     const btnText = document.getElementById('voiceBtnText');
-    const status = document.getElementById('voiceStatus');
-    const msg = document.getElementById('message');
+    const status  = document.getElementById('voiceStatus');
+    const tBox    = document.getElementById('voiceTranscript');
+    const parsed  = document.getElementById('voiceParsed');
 
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      status.textContent = '⚠️ Voice not supported in this browser. Please use Chrome.';
+      status.textContent = '⚠️ Please use Chrome or Safari for voice input.';
       return;
     }
-
-    if (isRecording) {
-      recognition && recognition.stop();
-      return;
-    }
+    if (isRecording) { recognition && recognition.stop(); return; }
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SR();
     recognition.lang = 'en-IE';
     recognition.interimResults = true;
-    recognition.continuous = true;
+    recognition.continuous = false;
 
     recognition.onstart = () => {
       isRecording = true;
       btn.classList.add('recording');
-      btnText.textContent = 'Recording... tap to stop';
-      status.textContent = '🎤 Listening...';
+      btnText.textContent = 'Listening… tap to stop';
+      status.textContent  = '🎤 Speak now — name, phone, email, what you need...';
+      tBox.style.display  = 'none';
+      parsed.style.display = 'none';
     };
+
     recognition.onresult = (e) => {
       let transcript = '';
-      for (let i = 0; i < e.results.length; i++) {
-        transcript += e.results[i][0].transcript;
+      for (let i = 0; i < e.results.length; i++) transcript += e.results[i][0].transcript;
+      tBox.style.display   = 'block';
+      tBox.textContent     = '"' + transcript + '"';
+      const data = parseTranscript(transcript);
+      fillFormFromVoice(data);
+      if (Object.keys(data).length > 0) {
+        parsed.style.display = 'block';
+        status.textContent = '✅ Form filled! Scroll down to check and send.';
       }
-      msg.value = transcript;
-      status.textContent = '✅ Got it! Edit if needed, then send.';
     };
+
     recognition.onerror = (e) => {
-      status.textContent = '⚠️ Error: ' + e.error + '. Please try again.';
+      status.textContent = '⚠️ ' + (e.error === 'not-allowed' ? 'Microphone access denied.' : 'Error: ' + e.error);
       isRecording = false;
       btn.classList.remove('recording');
-      btnText.textContent = 'Tap to speak';
+      btnText.textContent = 'Tap to try again';
     };
+
     recognition.onend = () => {
       isRecording = false;
       btn.classList.remove('recording');
       btnText.textContent = 'Tap to speak again';
     };
+
     recognition.start();
   }
 
