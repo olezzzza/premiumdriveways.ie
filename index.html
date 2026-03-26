@@ -1586,7 +1586,11 @@
           </div>
         </div>
 
-        <form onsubmit="submitForm(event)" id="mainForm">
+        <form onsubmit="submitForm(event)" id="mainForm" method="POST">
+          <input type="hidden" name="access_key" value="19dcbaf5-6038-48e7-9716-4dc44dff82c9" />
+          <input type="hidden" name="subject" value="New Quote Request — Premium Driveways Ireland" />
+          <input type="hidden" name="from_name" value="Premium Driveways Website" />
+          <input type="hidden" name="botcheck" value="" style="display:none;" />
           <div class="form-row">
             <div class="form-group">
               <label for="name">Your Name</label>
@@ -1707,14 +1711,37 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // Form submit
-  function submitForm(e) {
+  // Form submit → Web3Forms
+  async function submitForm(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '✅ Request Sent! We\'ll be in touch within 24h.';
+    const form = e.target;
+    const btn  = form.querySelector('.form-submit');
+
+    btn.textContent = '⏳ Sending...';
     btn.disabled = true;
-    btn.style.background = '#2a7a2a';
-    btn.style.color = '#fff';
+
+    try {
+      const data = new FormData(form);
+      const res  = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        btn.textContent = '✅ Sent! We\'ll call you within 24 hours.';
+        btn.style.background = '#2a7a2a';
+        btn.style.color = '#fff';
+        form.reset();
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (err) {
+      btn.textContent = '❌ Error. Please call us directly: +353 83 081 2362';
+      btn.disabled = false;
+      btn.style.background = '#7a2a2a';
+      btn.style.color = '#fff';
+    }
   }
 
   // ── Form mode switcher ────────────────────────────────────────
