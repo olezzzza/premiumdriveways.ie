@@ -42,7 +42,7 @@
         "name": "Premium Driveways Ireland",
         "description": "Expert driveway installation and construction across East Ireland including Dublin, Wicklow, Wexford, Kildare, Meath, Louth, Carlow and Kilkenny.",
         "url": "https://www.premiumdriveways.ie",
-        "telephone": "+353-XXX-XXXXXX",
+        "telephone": "+353-83-081-2362",
         "email": "info@premiumdriveways.ie",
         "foundingDate": "2024",
         "priceRange": "€€€",
@@ -300,6 +300,19 @@
       font-weight: 600;
       font-size: .95rem;
     }
+    .lang-btn {
+      background: rgba(201,162,39,.15);
+      border: 1px solid rgba(201,162,39,.3);
+      color: var(--gold);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .lang-btn:hover { background: rgba(201,162,39,.25); }
 
     /* Mobile nav */
     .nav-hamburger {
@@ -847,6 +860,66 @@
       .float-btn span { display: none; }
     }
 
+    /* ═══ GALLERY ════════════════════════════════════════════════ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .gallery-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .gallery-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .gallery-ba {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .gallery-before, .gallery-after { position: relative; }
+    .gallery-img {
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+    }
+    .gallery-img-label {
+      font-size: .72rem;
+      color: rgba(255,255,255,.8);
+      background: rgba(0,0,0,.45);
+      padding: 4px 8px;
+      border-radius: 4px;
+      line-height: 1.3;
+    }
+    .gallery-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .before-tag { background: rgba(0,0,0,.6); color: #fff; }
+    .after-tag  { background: var(--gold); color: var(--dark); }
+    .gallery-info {
+      padding: 16px 20px;
+      background: var(--white);
+    }
+    .gallery-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .gallery-info p {
+      font-size: .82rem;
+      color: var(--text-light);
+    }
+
     /* ═══ ANIMATIONS ═════════════════════════════════════════════ */
     .fade-up {
       opacity: 0;
@@ -869,12 +942,14 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#why">Why Us</a></li>
       <li><a href="#areas">Areas</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="tel:+353XXXXXXXXX" class="nav-phone">📞 Free Quote</a>
+      <button onclick="toggleLang()" class="lang-btn">🇮🇪 Gaeilge</button>
+      <a href="tel:+353830812362" class="nav-phone">📞 +353 83 081 2362</a>
       <a href="#contact" class="btn btn-gold" style="padding:10px 22px;font-size:.88rem;">Get Quote</a>
     </div>
     <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -978,27 +1053,47 @@
         <div class="service-popular">Most Popular</div>
         <div class="service-icon">✨</div>
         <h3 class="service-name">Resin Bound Driveway</h3>
-        <p class="service-desc">The modern premium choice. Smooth, durable, permeable and stunning. Available in 40+ colours. SUDS compliant — no planning permission required.</p>
+        <p class="service-desc">Two-component polymer resin mixed with aggregate. Seamless, permeable, UV-stable. 40+ colours. Lasts 20+ years with minimal maintenance. SUDS compliant.</p>
       </div>
       <div class="service-card fade-up">
         <div class="service-icon">🧱</div>
-        <h3 class="service-name">Block Paving</h3>
-        <p class="service-desc">Classic, timeless and versatile. Easily repaired, long-lasting and adds significant kerb appeal and value to your property.</p>
+        <h3 class="service-name">Block Paving (6cm)</h3>
+        <p class="service-desc">Heavy-duty 60mm concrete blocks rated for car traffic. Classic look, easy to repair, adds significant property value. Available in many colours and patterns.</p>
       </div>
       <div class="service-card fade-up">
         <div class="service-icon">⚫</div>
-        <h3 class="service-name">Tarmac Driveway</h3>
-        <p class="service-desc">The most cost-effective option. Quick to install, durable and low maintenance. Perfect for larger driveways on a budget.</p>
+        <h3 class="service-name">Tarmac / Asphalt</h3>
+        <p class="service-desc">Most cost-effective and fastest to install. Smooth, durable black surface. Ideal for larger driveways. Ready to use within 24 hours of laying.</p>
       </div>
       <div class="service-card fade-up">
         <div class="service-icon">🏗️</div>
         <h3 class="service-name">Concrete Driveway</h3>
-        <p class="service-desc">Maximum durability with a clean, modern look. Brushed, exposed aggregate or stamped finishes available. Lasts 30+ years.</p>
+        <p class="service-desc">Plain poured concrete — clean, modern and extremely durable. Lasts 30+ years. Brushed or exposed aggregate finish. Best value long-term option.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">💪</div>
+        <h3 class="service-name">Reinforced Concrete</h3>
+        <p class="service-desc">Steel rebar or mesh reinforced concrete for maximum strength. Ideal for heavy vehicles, vans or areas with soft ground. Engineered to last a lifetime.</p>
       </div>
       <div class="service-card fade-up">
         <div class="service-icon">🪨</div>
-        <h3 class="service-name">Gravel Driveway</h3>
-        <p class="service-desc">Natural, affordable and easy to maintain. Perfect for long rural driveways. Various stone types and colours available.</p>
+        <h3 class="service-name">Gravel / Crushed Stone</h3>
+        <p class="service-desc">Natural, affordable and quick to install. Excellent drainage. Ideal for long rural driveways. Various stone sizes and colours. Easy to top up over time.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🌿</div>
+        <h3 class="service-name">Grass Grid / Eco Pavers</h3>
+        <p class="service-desc">Hollow interlocking pavers filled with grass or gravel. Green, permeable and planning-friendly. Blends with the garden while supporting vehicle weight.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🛣️</div>
+        <h3 class="service-name">Large Concrete Slabs</h3>
+        <p class="service-desc">Precast slabs (up to 2m x 1.5m). Fast installation, industrial strength. Popular for gated entrances and wide driveways. Clean, minimal aesthetic.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🚗</div>
+        <h3 class="service-name">Tyre Tracks / Wheel Strips</h3>
+        <p class="service-desc">Two parallel strips (concrete, block or resin) with grass or gravel between. Budget-friendly, low maintenance and visually appealing. Great for long drives.</p>
       </div>
     </div>
   </div>
@@ -1139,6 +1234,152 @@
   </div>
 </section>
 
+<!-- ══════════════ GALLERY ════════════════════════════════════ -->
+<section id="gallery" style="background:var(--white);">
+  <div class="container">
+    <div class="fade-up" style="text-align:center;">
+      <p class="section-label">Our Work</p>
+      <h2 class="section-title">Before & After Transformations</h2>
+      <p class="section-sub" style="margin:0 auto;">
+        Real projects completed across East Ireland. Every driveway is unique — designed around your home.
+      </p>
+    </div>
+    <div class="gallery-grid fade-up">
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#8a7a6a,#6b5d4f);">
+              <span class="gallery-img-label">Cracked concrete, moss & weeds</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#c9a227,#a07d18);">
+              <span class="gallery-img-label">Resin bound — Autumn Gold</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Resin Bound Driveway</h3>
+          <p>Bray, Co. Wicklow · 48m² · Completed in 2 days</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#7a7a7a,#555);">
+              <span class="gallery-img-label">Muddy gravel, poor drainage</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#555,#333);">
+              <span class="gallery-img-label">Block paving — Charcoal/Silver</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Block Paving (60mm)</h3>
+          <p>Gorey, Co. Wexford · 65m² · Completed in 4 days</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#6b7a5a,#4a5a3a);">
+              <span class="gallery-img-label">Overgrown grass, soft ground</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#4a5a3a,#3a4a2a);">
+              <span class="gallery-img-label">Grass grid eco pavers</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Grass Grid / Eco Pavers</h3>
+          <p>Enniskerry, Co. Wicklow · 80m² · Completed in 3 days</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#9a8a7a,#7a6a5a);">
+              <span class="gallery-img-label">Old tarmac, cracked & sunken</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#d4c4a4,#b4a484);">
+              <span class="gallery-img-label">Reinforced concrete — brushed finish</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Reinforced Concrete</h3>
+          <p>Swords, Co. Dublin · 90m² · Completed in 5 days</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#8a9a7a,#6a7a5a);">
+              <span class="gallery-img-label">No driveway — garden to road</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#c9a227,#8a7a6a);">
+              <span class="gallery-img-label">Wheel strips — resin + gravel</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Tyre Tracks / Wheel Strips</h3>
+          <p>Arklow, Co. Wicklow · 2×30m · Completed in 2 days</p>
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="gallery-ba">
+          <div class="gallery-before">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#7a6a8a,#5a4a6a);">
+              <span class="gallery-img-label">Broken slabs, uneven surface</span>
+            </div>
+            <div class="gallery-tag before-tag">BEFORE</div>
+          </div>
+          <div class="gallery-after">
+            <div class="gallery-img" style="background:linear-gradient(135deg,#5a6a7a,#3a4a5a);">
+              <span class="gallery-img-label">Large concrete slabs — modern finish</span>
+            </div>
+            <div class="gallery-tag after-tag">AFTER</div>
+          </div>
+        </div>
+        <div class="gallery-info">
+          <h3>Large Concrete Slabs</h3>
+          <p>Kilkenny City · 55m² · Completed in 3 days</p>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <p style="color:var(--text-light);margin-bottom:20px;">📸 Have your own project? Send us photos and we'll give you a free quote.</p>
+      <a href="#contact" class="btn btn-gold">Get a Free Quote for Your Home →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════ FAQ ══════════════════════════════════════════ -->
 <section id="faq">
   <div class="container">
@@ -1219,7 +1460,7 @@
           <div class="contact-icon">📞</div>
           <div>
             <div class="contact-item-label">Phone</div>
-            <div class="contact-item-value">+353 XXX XXXXXX</div>
+            <div class="contact-item-value">+353 83 081 2362</div>
           </div>
         </div>
         <div class="contact-item">
@@ -1253,7 +1494,7 @@
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="+353 XXX XXXXXX" required />
+              <input type="tel" id="phone" name="phone" placeholder="+353 83 081 2362" required />
             </div>
           </div>
           <div class="form-group">
@@ -1347,10 +1588,10 @@
 
 <!-- ══════════════ FLOATING CTA ════════════════════════════════ -->
 <div class="float-cta">
-  <a href="https://wa.me/353XXXXXXXXX?text=Hi%2C%20I%27d%20like%20a%20free%20quote%20for%20a%20driveway" class="float-btn float-wa" target="_blank">
+  <a href="https://wa.me/353830812362?text=Hi%2C%20I%27d%20like%20a%20free%20quote%20for%20a%20driveway" class="float-btn float-wa" target="_blank">
     💬 <span>WhatsApp Us</span>
   </a>
-  <a href="tel:+353XXXXXXXXX" class="float-btn float-call">
+  <a href="tel:+353830812362" class="float-btn float-call">
     📞 <span>Call Now</span>
   </a>
 </div>
@@ -1384,6 +1625,65 @@
     btn.disabled = true;
     btn.style.background = '#2a7a2a';
     btn.style.color = '#fff';
+  }
+
+  // Irish / English language toggle
+  const translations = {
+    en: {
+      'nav-services':  'Services',
+      'nav-why':       'Why Us',
+      'nav-gallery':   'Gallery',
+      'nav-areas':     'Areas',
+      'nav-process':   'Process',
+      'nav-faq':       'FAQ',
+      'nav-contact':   'Contact',
+      'hero-badge':    "⭐ East Ireland's #1 Driveway Specialists",
+      'hero-title':    'Your Home Deserves a <em>Premium Driveway</em>',
+      'hero-btn1':     'Get Free Quote →',
+      'hero-btn2':     'Our Services',
+      'svc-label':     'What We Do',
+      'svc-title':     'Expert Driveway Solutions',
+      'contact-btn':   'Get Quote',
+      'lang-btn':      '🇮🇪 Gaeilge',
+    },
+    ga: {
+      'nav-services':  'Seirbhísí',
+      'nav-why':       'Cén Fáth Muid',
+      'nav-gallery':   'Gailearaí',
+      'nav-areas':     'Ceantair',
+      'nav-process':   'Próiseas',
+      'nav-faq':       'Ceisteanna',
+      'nav-contact':   'Teagmháil',
+      'hero-badge':    '⭐ Speisialtóirí Príomha Cabhsa in Oirthear Éireann',
+      'hero-title':    'Teastaíonn <em>Cabhsa Préimhe</em> ó do Theach',
+      'hero-btn1':     'Faigh Luacháil Saor →',
+      'hero-btn2':     'Ár Seirbhísí',
+      'svc-label':     'Cad A Dhéanaimid',
+      'svc-title':     'Réitigh Saineolaithe Cabhsa',
+      'contact-btn':   'Luacháil',
+      'lang-btn':      '🇬🇧 English',
+    }
+  };
+  let currentLang = 'en';
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'ga' : 'en';
+    const t = translations[currentLang];
+    document.querySelector('.lang-btn').textContent = t['lang-btn'];
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const keys = ['nav-services','nav-why','nav-gallery','nav-areas','nav-process','nav-faq','nav-contact'];
+    navLinks.forEach((a, i) => { if (keys[i]) a.textContent = t[keys[i]]; });
+    const badge = document.querySelector('.hero-badge');
+    if (badge) badge.textContent = t['hero-badge'];
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) heroTitle.innerHTML = t['hero-title'];
+    const heroBtn1 = document.querySelector('.hero-buttons .btn-gold');
+    if (heroBtn1) heroBtn1.textContent = t['hero-btn1'];
+    const heroBtn2 = document.querySelector('.hero-buttons .btn-outline');
+    if (heroBtn2) heroBtn2.textContent = t['hero-btn2'];
+    const svcLabel = document.querySelector('#services .section-label');
+    if (svcLabel) svcLabel.textContent = t['svc-label'];
+    const svcTitle = document.querySelector('#services .section-title');
+    if (svcTitle) svcTitle.textContent = t['svc-title'];
   }
 
   // Mobile menu
